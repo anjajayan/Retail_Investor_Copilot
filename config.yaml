@@ -1,0 +1,8 @@
+sources:
+ - SEC
+SEC:
+  user: "anjana.jayan-1@gmail.com"
+  url: 'https://www.sec.gov/sitemap/sitemap4.xml'
+  pattern: 'rules/sro/nyse'
+  n: 5  # The number of urls to fetch
+  required_metadata: ['Author', 'CreationDate', 'ModDate', 'Title']
