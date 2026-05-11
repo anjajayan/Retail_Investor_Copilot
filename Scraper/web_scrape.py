@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import pdfplumber
 import json
 import io
+import os
+
+
+os.makedirs("Documents", exist_ok=True)
 
 def scrape_corpus_from_src(user, url, pattern, n, required_metadata):
     session = requests.Session()
@@ -29,7 +33,7 @@ def scrape_corpus_from_src(user, url, pattern, n, required_metadata):
     print("Fetching process finished. Storing corpus into json")
     with open('Corpus.json', 'w', encoding="utf-8") as f:
         json.dump(corpus, f, indent=2)
-        
+    return corpus
 
 
 
@@ -38,7 +42,7 @@ def scrape_document(session, links, required_metadata, counter):
     response = session.get(links, timeout=30)
     # Saving the bytes object
     content = io.BytesIO(response.content)
-    # Temporary code to save as pdf
+    # Saving PDFs locally for evaluation and ground truth verification
     with open(f"Documents/Doc_{counter+1}.pdf", "wb") as f:
         f.write(content.getvalue())
     
@@ -53,8 +57,7 @@ def scrape_document(session, links, required_metadata, counter):
         metadata[md] = pdf.metadata.get(md, "")
     metadata['url'] = links
     # Fetching and creating page level data
-    page_number = 1
-    for page in pdf.pages:
+    for page_number, page in enumerate(pdf.pages, start=1):
         page_dict = {}
         page_dict['text'] = page.extract_text()
         metadata['page_number'] = page_number

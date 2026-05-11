@@ -1,5 +1,5 @@
 import yaml
-from Retail-Investor_Copilot.Scraper.web_scrape import scrape_corpus_from_src
+from Scraper.web_scrape import scrape_corpus_from_src
 
 def main():
     print("Hello from Retail - Investor Copilot!")
@@ -12,6 +12,12 @@ def main():
     for source in config['sources']:
         print(f"Scraping the source : {source}")
         scrape_params = config[source]
+        corpus = scrape_corpus_from_src(scrape_params["user"], scrape_params["url"], \
+                               scrape_params["pattern"], scrape_params["n"], \
+                                scrape_params["required_metadata"])
+    
+        
+        
 
 
 
