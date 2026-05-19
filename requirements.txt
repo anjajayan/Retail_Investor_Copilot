@@ -1,0 +1,15 @@
+pyaml
+requests
+bs4
+pdfplumber
+langchain_core
+lxml
+pandas
+unstructured
+pi_heif
+unstructured_inference
+langchain_experimental
+langchain_huggingface
+sentence-transformers
+langchain-weaviate
+weaviate-client

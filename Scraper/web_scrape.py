@@ -4,6 +4,7 @@ import pdfplumber
 import json
 import io
 import os
+from Chunking.chunker import detect_headers, document_chunking
 
 
 os.makedirs("Documents", exist_ok=True)
@@ -27,7 +28,7 @@ def scrape_corpus_from_src(user, url, pattern, n, required_metadata):
     corpus = []
     counter = 0
     for links in urls[:n]:
-        doc_info = scrape_document(session, links, required_metadata, counter) 
+        doc_info = scrape_document(session, links, required_metadata, counter)
         counter += 1
         corpus.append(doc_info)
     print("Fetching process finished. Storing corpus into json")
@@ -42,29 +43,38 @@ def scrape_document(session, links, required_metadata, counter):
     response = session.get(links, timeout=30)
     # Saving the bytes object
     content = io.BytesIO(response.content)
-    # Saving PDFs locally for evaluation and ground truth verification
+    
+
     with open(f"Documents/Doc_{counter+1}.pdf", "wb") as f:
         f.write(content.getvalue())
     
-    
-    doc_info = []
+
     pdf =  pdfplumber.open(content)   
-    print(f"Fetching document no. {counter + 1} with {len(pdf.pages)} pages from SEC")
+    print(f"Fetching document no. {counter + 1} with {len(pdf.pages)} pages from source and applying document-aware chunking")
     # Fetching metadata of the document
     metadata = {}
     
     for md in required_metadata:
         metadata[md] = pdf.metadata.get(md, "")
     metadata['url'] = links
+    #TODO: Hardcoding the source for now
+    metadata['Source'] = 'SEC'
+    # Inspecting the section
+    global_headers = []
     # Fetching and creating page level data
     for page_number, page in enumerate(pdf.pages, start=1):
-        page_dict = {}
-        page_dict['text'] = page.extract_text()
-        metadata['page_number'] = page_number
-        page_dict['metadata'] = metadata.copy()
-        page_number += 1
-        doc_info.append(page_dict)
-    return doc_info
+
+        # Document aware chunking - Step 1
+        
+        global_headers = detect_headers(page, global_headers)
+    
+    chunks = document_chunking(global_headers, metadata)
+    
+      
+    
+    return chunks
+
+
     
     
 

@@ -6,3 +6,5 @@ SEC:
   pattern: 'rules/sro/nyse'
   n: 5  # The number of urls to fetch
   required_metadata: ['Author', 'CreationDate', 'ModDate', 'Title']
+Embeddings:
+  recreate_vector_store: true
