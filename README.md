@@ -6,3 +6,6 @@ Key details:
 * Core job: answer regulation- and protection-related questions using official sources
 * Source scope for v1: SEC investor education/guidance + FINRA investor education/notices relevant to investors
 * Out-of-scope: personalized investment advice, portfolio recommendations, tax advice, legal advice
+
+
+Evaluation was conducted using RAGAS with Mixtral as the judge LLM due to API access constraints. Results should be interpreted as relative performance indicators rather than absolute quality scores.

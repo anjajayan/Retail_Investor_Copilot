@@ -3,12 +3,6 @@ from langchain_experimental.text_splitter import SemanticChunker
 from langchain_huggingface import HuggingFaceEmbeddings
 from datetime import datetime
 
-
-emb_model = HuggingFaceEmbeddings(
-    model_name = "BAAI/bge-small-en-v1.5",
-   
-)
-
 from itertools import groupby
 from operator import itemgetter
 import re
@@ -18,6 +12,10 @@ from transformers import AutoTokenizer
 
 def semantic_chunking(corpus):
     tokenizer = AutoTokenizer.from_pretrained("BAAI/bge-large-en-v1.5")
+    emb_model = HuggingFaceEmbeddings(
+    model_name = "BAAI/bge-small-en-v1.5",
+    )
+
     # Semantic chunking
     chunker = SemanticChunker(
     emb_model,

@@ -13,3 +13,4 @@ langchain_huggingface
 sentence-transformers
 langchain-weaviate
 weaviate-client
+langchain_ollama
