@@ -99,3 +99,5 @@ Automated test set generation was attempted using the RAGAS `TestsetGenerator` w
 - No REST API or UI layer yet — FastAPI endpoint and Streamlit UI planned
 - Corpus audit and relevance review pending
 - Document metadata enrichment (rule numbers, amendment flags) deferred to v2
+- Explore Reranking of retrieved chunks
+- Include aspects of Monitoring with relevant metrics
