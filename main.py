@@ -5,8 +5,13 @@ from Chunking.chunker import semantic_chunking
 from Embedding.embedding import embed
 from Embedding.connection import recreate_vector_store
 from Retrieval.retrieval import retrieve, generate
+from Evaluation.evaluation import run_evaluation
 from dotenv import load_dotenv
 import argparse
+import sys
+
+
+sys.stdout.reconfigure(encoding="utf-8")
 
 
 def ingest(config):
@@ -28,8 +33,11 @@ def retrieval_generation(config):
     print("Retrieval pipeline has begun")
     raw_query = "What is the meaning of Rule 122?"
     retrieved_chunks = retrieve(raw_query)
-    generate(raw_query, retrieved_chunks)
+    response = generate(raw_query, retrieved_chunks)
 
+def evaluation():
+    print("Evaluation pipeline has begun")
+    run_evaluation()
 
 def main():
     
@@ -54,6 +62,8 @@ def main():
         ingest(config)
     if runtype == 'RAG':
         retrieval_generation(config)
+    if runtype == 'EVAL':
+        evaluation()
 
 
 

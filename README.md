@@ -9,3 +9,5 @@ Key details:
 
 
 Evaluation was conducted using RAGAS with Mixtral as the judge LLM due to API access constraints. Results should be interpreted as relative performance indicators rather than absolute quality scores.
+
+Attempted automated test set generation using RAGAS TestsetGenerator with local Mixtral. Encountered structured output compliance issues with local LLMs — a known limitation when using open source models without API access. Fell back to a semi-automated approach using llama3.1 for question generation with manual review."

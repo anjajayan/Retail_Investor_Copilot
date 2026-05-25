@@ -1,0 +1,15 @@
+Generate {n} questions from this text below, in natural language, 
+mimicking a user with limited knowledge of the domain. 
+GUIDELINES : 
+1. Generate questions that ask about specific rules, requirements, 
+    or obligations described in the text.
+2. Questions should be from the perspective of a retail investor trying to understand their rights or broker obligations.
+3. Do not generate questions about document metadata, authorship, or document structure.
+4. Each question must be fully answerable using only the provided text.
+
+OUTPUT:
+1. Return only the questions, no preamble, no numbering, no explanation.
+2. For each question, also provide a concise answer based solely on the provided text.
+
+{chunk_text}
+

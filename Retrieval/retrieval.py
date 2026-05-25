@@ -15,17 +15,18 @@ emb_model = HuggingFaceEmbeddings(
         encode_kwargs={"normalize_embeddings": True}
     )
 
-cluster_url = os.getenv("WEAVIATE_URL")
-api_key = os.getenv("WEAVIATE_API_KEY")
-# Connect to Weaviate Cloud
-weaviate_client = weaviate.connect_to_weaviate_cloud(
-        cluster_url = cluster_url, 
-        auth_credentials=weaviate.auth.AuthApiKey(api_key)
-    )
 
 
 def retrieve(raw_query):
     print(f"Retrieving context to answer the query")
+    cluster_url = os.getenv("WEAVIATE_URL")
+    api_key = os.getenv("WEAVIATE_API_KEY")
+    # Connect to Weaviate Cloud
+    weaviate_client = weaviate.connect_to_weaviate_cloud(
+            cluster_url = cluster_url, 
+            auth_credentials=weaviate.auth.AuthApiKey(api_key)
+        )
+
     
     query_instruction="Represent this sentence for searching relevant passages: "
     query = query_instruction + raw_query
@@ -47,7 +48,7 @@ def retrieve(raw_query):
     alpha=0.8
     )
     weaviate_client.close()
-    return results
+    return  results
 
 def generate(raw_query, results):
     print(f"Generating the answer the query")
@@ -77,3 +78,5 @@ def generate(raw_query, results):
     
     print(f"User : {raw_query} ")
     print(f"Copilot : {response} ")
+
+    return response

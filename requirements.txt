@@ -14,3 +14,4 @@ sentence-transformers
 langchain-weaviate
 weaviate-client
 langchain_ollama
+ragas
