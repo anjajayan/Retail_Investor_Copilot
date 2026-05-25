@@ -4,7 +4,7 @@ A RAG-powered copilot that helps retail investors understand SEC and FINRA regul
 
 - **Target user:** Retail investors with limited financial background
 - **Core job:** Answer regulation- and protection-related questions using official sources
-- **Source scope (v1):** SEC investor education/guidance + FINRA investor education notices
+- **Source scope (v1):** SEC investor education/guidance
 - **Out of scope:** Personalised investment advice, portfolio recommendations, tax advice, legal advice
 
 ---
