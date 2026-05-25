@@ -123,46 +123,46 @@ def testset_generator(chunks):
     samples = []
     sample_chunks = random.sample(chunks, 20)
     counter = 1
-    # for chunk in sample_chunks:
-    #     chunk_text = chunk.page_content
-    #     print(f"Generating questions for chunk no. : {counter}")
-    #     response = chain.invoke({'n': n, 'chunk_text': chunk_text})
-    #     if not response.lists or isinstance(response.lists[0], str):
-    #         print("Skipping malformed chunk response")
-    #         continue
-    #     for qn in response.lists:
-    #         if isinstance(qn, str):
-    #             print(f"Skipping malformed question")
-    #             continue
-    #         question = qn.question
-    #         ground_truth = qn.ground_truth
+    for chunk in sample_chunks:
+        chunk_text = chunk.page_content
+        print(f"Generating questions for chunk no. : {counter}")
+        response = chain.invoke({'n': n, 'chunk_text': chunk_text})
+        if not response.lists or isinstance(response.lists[0], str):
+            print("Skipping malformed chunk response")
+            continue
+        for qn in response.lists:
+            if isinstance(qn, str):
+                print(f"Skipping malformed question")
+                continue
+            question = qn.question
+            ground_truth = qn.ground_truth
 
-    #         # Retrieve 
-    #         retrieved_chunks = retrieve(question)
-    #         contexts = [doc.page_content for doc in retrieved_chunks]
-    #         generated_answer = generate(question, retrieved_chunks)
-    #         sam = SingleTurnSample(user_input = question,
-    #             retrieved_contexts = contexts,
-    #             reference_contexts= [ground_truth],
-                # reference = ground_truth
-    #             response = generated_answer)
-    #         samples.append(sam)
+            # Retrieve 
+            retrieved_chunks = retrieve(question)
+            contexts = [doc.page_content for doc in retrieved_chunks]
+            generated_answer = generate(question, retrieved_chunks)
+            sam = SingleTurnSample(user_input = question,
+                retrieved_contexts = contexts,
+                reference_contexts= [ground_truth],
+                reference = ground_truth
+                response = generated_answer)
+            samples.append(sam)
     
-    # dataset = EvaluationDataset(samples=samples)
-    # # Saving to disk
-    # dataset.to_pandas().to_csv('Evaluation/Evaluation dataset.csv', index = False)
+    dataset = EvaluationDataset(samples=samples)
+    # Saving to disk
+    dataset.to_pandas().to_csv('Evaluation/Evaluation dataset.csv', index = False)
 
-    df = pd.read_csv('Evaluation/Evaluation dataset.csv')
-    samples = []
-    for _, row in df.iterrows():
-        sam = SingleTurnSample(
-            user_input=row['user_input'],
-            retrieved_contexts=eval(row['retrieved_contexts']),
-            reference_contexts=eval(row['reference_contexts']),
-            reference=eval(row['reference_contexts'])[0],
-            response=row['response']
-        )
-        samples.append(sam)
+    # df = pd.read_csv('Evaluation/Evaluation dataset.csv')
+    # samples = []
+    # for _, row in df.iterrows():
+    #     sam = SingleTurnSample(
+    #         user_input=row['user_input'],
+    #         retrieved_contexts=eval(row['retrieved_contexts']),
+    #         reference_contexts=eval(row['reference_contexts']),
+    #         reference=eval(row['reference_contexts'])[0],
+    #         response=row['response']
+    #     )
+    #     samples.append(sam)
 
     dataset = EvaluationDataset(samples=samples)
     # Evaluate 
